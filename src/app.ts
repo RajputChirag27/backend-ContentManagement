@@ -28,9 +28,9 @@ const corsOptions = {
   credentials: true  // Add this line
 };
 
-console.log(path.join(__dirname,'public'));
+console.log(path.join(__dirname,'uploads'));
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'uploads')));
 app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))
