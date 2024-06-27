@@ -1,2 +1,3 @@
 import { User } from "./userModel";
-export { User };
+import { Media } from "./mediaModel";
+export { User, Media };

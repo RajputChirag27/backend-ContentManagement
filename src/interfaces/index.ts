@@ -1,3 +1,4 @@
 import { AuthRequest } from "./IAuth";
 import { IUser } from "./IUser";
-export { AuthRequest, IUser };
+import { IMedia } from "./IMedia";
+export { AuthRequest, IUser, IMedia };
