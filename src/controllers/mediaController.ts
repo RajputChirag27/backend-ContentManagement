@@ -84,5 +84,5 @@ export class MediaController {
     } catch (err) {
       errorHandler(req, res, next, err);
     }
-  }
+  } 
 }
