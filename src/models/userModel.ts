@@ -26,7 +26,7 @@ const UserSchema = new Schema<IUser>(
     otp: {
       type: String,
     },
-    otpExpiration:{
+    otpExpiration: {
       type: Date,
     },
     profilePicture: {
@@ -58,7 +58,7 @@ UserSchema.pre("save", async function (next) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
-  (this.password as string) = await bcrypt.hash((this.password as string), salt);
+  (this.password as string) = await bcrypt.hash(this.password as string, salt);
   next();
 });
 
@@ -72,9 +72,13 @@ UserSchema.pre("findOneAndUpdate", async function (next) {
 });
 
 UserSchema.methods.getSignedToken = function () {
-  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRET as string, {
-    expiresIn: process.env.JWT_EXPIRESIN,
-  });
+  return jwt.sign(
+    { id: this._id, role: this.role },
+    process.env.JWT_SECRET as string,
+    {
+      expiresIn: process.env.JWT_EXPIRESIN,
+    },
+  );
 };
 
 // UserSchema.methods.setRefreshToken = function (payload) {
@@ -83,7 +87,7 @@ UserSchema.methods.getSignedToken = function () {
 //   })
 // }
 
-UserSchema.methods.matchPasswords = async function (password : string) {
+UserSchema.methods.matchPasswords = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 

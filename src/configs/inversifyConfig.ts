@@ -12,7 +12,9 @@ const container = new Container();
 
 container.bind<UserController>(TYPES.UserController).to(UserController);
 // container.bind<TaskController>(TYPES.TaskController).to(TaskController)
-container.bind<ArticleController>(TYPES.ArticleController).to(ArticleController);
+container
+  .bind<ArticleController>(TYPES.ArticleController)
+  .to(ArticleController);
 container.bind<MediaController>(TYPES.MediaController).to(MediaController);
 
 container.bind<UserService>(TYPES.UserService).to(UserService);

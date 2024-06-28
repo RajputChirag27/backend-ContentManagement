@@ -50,7 +50,6 @@ export class UserController {
     }
   }
 
-
   @httpGet("/protected", TYPES.AuthMiddleware)
   public async protected(req: AuthRequest, res: Response, next: NextFunction) {
     try {
@@ -93,45 +92,50 @@ export class UserController {
     }
   }
 
-  
-  @httpPost('/generateOTP')
-  async generateOTP(req: AuthRequest, res: Response, next : NextFunction) {
-      try {
-          const email: string = req.body.email;
-          console.log(email);
-          const length: number = 6; // Default OTP length is 6 digits
-          const otp = await this._userService.generateOTP(email, length);
-          console.log(otp)
-          // req.session.user = otp;
-          // req.session.email = email;
-          if(otp){
-            res.status(200).json({ message : "Email Sent Successfully!!!" });
-          } else{
-            throw new CustomError("UserNotFound", statusCode.NOT_ACCEPTABLE, "User not Found");
-          }
-      } catch (error) {
-          console.error('Error generating OTP', error);
-          res.status(500).json({ error: 'Internal server error', message: error });
+  @httpPost("/generateOTP")
+  async generateOTP(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const email: string = req.body.email;
+      console.log(email);
+      const length: number = 6; // Default OTP length is 6 digits
+      const otp = await this._userService.generateOTP(email, length);
+      console.log(otp);
+      // req.session.user = otp;
+      // req.session.email = email;
+      if (otp) {
+        res.status(200).json({ message: "Email Sent Successfully!!!" });
+      } else {
+        throw new CustomError(
+          "UserNotFound",
+          statusCode.NOT_ACCEPTABLE,
+          "User not Found",
+        );
       }
+    } catch (error) {
+      console.error("Error generating OTP", error);
+      res.status(500).json({ error: "Internal server error", message: error });
+    }
   }
 
-    
-  @httpPost('/verifyOTP')
-  async verifyOTP(req: AuthRequest, res: Response, next : NextFunction) {
-      try {
-          console.log(req.body);
-          const {otp} = req.body; // Default OTP length is 6 digits
-          console.log(otp)
-          const result = await this._userService.verifyOTP(otp);
-          if(result){
-            res.send({ result, verified: true, message: "User Logged In Successfully" }); 
-          }
-      } catch (error) {
-          console.error('Error generating OTP', error);
-          res.status(500).json({ error: 'Internal server error', message: error });
+  @httpPost("/verifyOTP")
+  async verifyOTP(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      console.log(req.body);
+      const { otp } = req.body; // Default OTP length is 6 digits
+      console.log(otp);
+      const result = await this._userService.verifyOTP(otp);
+      if (result) {
+        res.send({
+          result,
+          verified: true,
+          message: "User Logged In Successfully",
+        });
       }
+    } catch (error) {
+      console.error("Error generating OTP", error);
+      res.status(500).json({ error: "Internal server error", message: error });
+    }
   }
-
 
   @httpPost("/login")
   public async login(req: Request, res: Response, next: NextFunction) {
@@ -139,15 +143,18 @@ export class UserController {
       const { email, password } = req.body;
       const result = await this._userService.login(email, password);
       // req.headers.authorization = `Bearer ${jwtToken}`;
-      if (!result){
+      if (!result) {
         throw new CustomError(
           "User Not Verified",
           statusCode.UNAUTHORIZED,
           "Please Login Again or Create New Account",
         );
-      }
-        else {
-          res.send({ result, verified: true, message: "User Logged In Successfully" }); 
+      } else {
+        res.send({
+          result,
+          verified: true,
+          message: "User Logged In Successfully",
+        });
       }
     } catch (err) {
       if (!res.headersSent) errorHandler(req, res, next, err);

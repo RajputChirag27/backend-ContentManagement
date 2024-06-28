@@ -10,7 +10,7 @@ export const errorHandler = (
   err: any,
 ) => {
   try {
-    console.log(err)
+    console.log(err);
     console.log(
       "Custom Error Handler => ",
       err.name,
@@ -23,8 +23,8 @@ export const errorHandler = (
       return res.status(err.statusCode || 500).json({
         success: false,
         error: err.message,
-        errorName : err.name,
-        message : err.message
+        errorName: err.name,
+        message: err.message,
       });
     } else {
       throw new CustomError(

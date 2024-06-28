@@ -29,7 +29,9 @@ export class ArticleService {
   }
 
   async updateArticle(id: string, body: any): Promise<IArticle | null> {
-    const article = await Article.findByIdAndUpdate(id, body, { new: true }).exec();
+    const article = await Article.findByIdAndUpdate(id, body, {
+      new: true,
+    }).exec();
     if (!article) {
       throw new CustomError(
         messages.Article_Not_Found.name,

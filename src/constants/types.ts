@@ -1,4 +1,3 @@
-
 export const TYPES = {
   // Controllers
   UserController: Symbol.for("UserController"),
